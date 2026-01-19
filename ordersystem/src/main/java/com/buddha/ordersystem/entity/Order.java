@@ -3,6 +3,7 @@ package com.buddha.ordersystem.entity;
 import jakarta.persistence.*;
 import org.hibernate.engine.internal.Cascade;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class Order {
 
     @Column(name = "ordered_by")
     private String orderedBy;
+
+    @Column(name = "date_of_order")
+    private LocalDate date;
 
     @Column(name = "order_code")
     private String orderCode;

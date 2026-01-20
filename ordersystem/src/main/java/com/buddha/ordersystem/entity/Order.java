@@ -41,6 +41,10 @@ public class Order {
         this.orderDescription = orderDescription;
 
     }
+    public void addItem(OrderItem item){
+        orderItems.add(item);
+        item.setOrder(this);
+    }
 
     public int getId() {
         return id;

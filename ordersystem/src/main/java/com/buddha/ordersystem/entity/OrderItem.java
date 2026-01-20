@@ -1,5 +1,6 @@
 package com.buddha.ordersystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 public class OrderItem {
@@ -15,14 +16,17 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
+
+    private Long quantity;
 
     private Long price;
 
-    public OrderItem(Product product, Order order, Long price) {
-        this.id = id;
+    public OrderItem(Product product, Long price, Long quantity) {
+
         this.product = product;
-        this.order = order;
+        this.quantity = quantity;
         this.price = price;
     }
 

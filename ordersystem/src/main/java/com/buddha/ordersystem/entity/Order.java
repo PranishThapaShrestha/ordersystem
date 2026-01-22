@@ -13,7 +13,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "ordered_by")
     private String orderedBy;
@@ -23,6 +23,7 @@ public class Order {
 
     @Column(name = "order_code")
     private String orderCode;
+
 
     @Column(name = "order_description")
     private String orderDescription;
@@ -46,11 +47,27 @@ public class Order {
         item.setOrder(this);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 

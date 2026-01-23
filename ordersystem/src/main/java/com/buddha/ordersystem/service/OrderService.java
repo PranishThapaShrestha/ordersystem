@@ -25,7 +25,7 @@ public class OrderService {
         this.orderItemRepo = orderItemRepo;
     }
 
-    public Order createOrder(List<Long> productIds, List<Long> quantities) {
+    public OrderDto createOrder(List<Long> productIds, List<Long> quantities) {
         if (productIds.size() != quantities.size()) {
             throw new IllegalArgumentException("Products and quantities size mismatch");
         }
@@ -42,21 +42,19 @@ public class OrderService {
         orderRepo.save(order);
 
 
-
-        return new Order();
+        return maoToDto(order);
     }
 
-    private OrderDto maoToDto(Order order){
-        List<OrderItemDto> intems= order.getOrderItems().stream()
-                .map(i ->new OrderItemDto(
-                        new ProductDto(i.getProduct().getId(),i.getProduct().getProductName()
-                        ,i.getProduct().getPrice()),i.getQuantity(),i.getPrice())).toList();
+    private OrderDto maoToDto(Order order) {
+        List<OrderItemDto> intems = order.getOrderItems().stream()
+                .map(i -> new OrderItemDto(
+                        new ProductDto(i.getProduct().getId(), i.getProduct().getProductName()
+                                , i.getProduct().getPrice()), i.getQuantity(), i.getPrice())).toList();
 
-        return new OrderDto(order.getId(),order.getDate(),intems);
+        return new OrderDto(order.getId(), order.getDate(), intems);
 
 
     }
-
 
 
 }

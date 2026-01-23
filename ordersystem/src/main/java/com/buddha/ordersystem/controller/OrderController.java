@@ -3,6 +3,7 @@ package com.buddha.ordersystem.controller;
 import com.buddha.ordersystem.dto.OrderDto;
 import com.buddha.ordersystem.entity.OrderItem;
 import com.buddha.ordersystem.service.OrderService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,13 +20,16 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    public OrderDto createOrder(@RequestParam List<Long> productIds, List<Long> quantities){
-
-        return orderService.createOrder(productIds,quantities);
-
+    @GetMapping("/create")
+    public OrderDto createOrder(@RequestParam List<Long> productIds, @RequestParam List<Long> quantities) {
+        return orderService.createOrder(productIds, quantities);
 
     }
 
+    @GetMapping
+    public List<OrderDto> getAllOrders() {
+        return orderService.findAllOrders();
+    }
 
 
 }

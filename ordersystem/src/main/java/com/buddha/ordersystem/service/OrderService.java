@@ -11,7 +11,6 @@ import com.buddha.ordersystem.repository.OrderRepository;
 import com.buddha.ordersystem.repository.ProductRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderService {
 
@@ -42,10 +41,10 @@ public class OrderService {
         orderRepo.save(order);
 
 
-        return maoToDto(order);
+        return mapToDto(order);
     }
 
-    private OrderDto maoToDto(Order order) {
+    private OrderDto mapToDto(Order order) {
         List<OrderItemDto> intems = order.getOrderItems().stream()
                 .map(i -> new OrderItemDto(
                         new ProductDto(i.getProduct().getId(), i.getProduct().getProductName()
@@ -54,6 +53,10 @@ public class OrderService {
         return new OrderDto(order.getId(), order.getDate(), intems);
 
 
+    }
+
+    public List<OrderDto> findAllOrders() {
+        return orderRepo.findAll().stream().map(this::mapToDto).toList();
     }
 
 

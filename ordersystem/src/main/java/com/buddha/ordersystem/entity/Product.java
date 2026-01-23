@@ -19,6 +19,8 @@ public class Product {
     @Column(name = "product_availability")
     private boolean productsAvailable;
 
+
+
     @Column(name = "product_code")
     private String productCode;
 

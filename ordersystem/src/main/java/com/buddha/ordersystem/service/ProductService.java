@@ -1,0 +1,26 @@
+package com.buddha.ordersystem.service;
+
+import com.buddha.ordersystem.dto.ProductDto;
+import com.buddha.ordersystem.entity.Product;
+import com.buddha.ordersystem.repository.ProductRepository;
+
+import java.util.List;
+
+public class ProductService {
+    private final ProductRepository productRepo;
+
+    public ProductService(ProductRepository productRepo) {
+        this.productRepo = productRepo;
+    }
+
+    public List<ProductDto> findAllProducts() {
+
+        return productRepo.findAll().stream().map(this::mapToProductDto).toList();
+    }
+
+    private ProductDto mapToProductDto(Product product) {
+        return new ProductDto(product.getId(), product.getProductName(), product.getPrice());
+    }
+
+
+}

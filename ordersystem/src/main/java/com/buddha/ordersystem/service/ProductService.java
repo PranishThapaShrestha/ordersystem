@@ -18,6 +18,11 @@ public class ProductService {
         return productRepo.findAll().stream().map(this::mapToProductDto).toList();
     }
 
+
+    public List<ProductDto> getAllProductsByIds(List<Long> productIds) {
+        return productRepo.findAllById(productIds).stream().map(product -> mapToProductDto(product)).toList();
+    }
+
     private ProductDto mapToProductDto(Product product) {
         return new ProductDto(product.getId(), product.getProductName(), product.getPrice());
     }

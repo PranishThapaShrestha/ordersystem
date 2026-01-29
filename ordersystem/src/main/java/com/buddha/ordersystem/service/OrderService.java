@@ -32,32 +32,26 @@ public class OrderService {
         Order order = new Order();
 
         for (int i = 0; i < productIds.size(); i++) {
-            Product product = productRepo.findById(productIds.get(i))
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+            Product product = productRepo.findById(productIds.get(i)).orElseThrow(() -> new RuntimeException("Product not found"));
             OrderItem item = new OrderItem(product, quantities.get(i), product.getPrice());
             order.addItem(item);
         }
 
         orderRepo.save(order);
 
-
         return mapToDto(order);
     }
 
+
     private OrderDto mapToDto(Order order) {
-        List<OrderItemDto> intems = order.getOrderItems().stream()
-                .map(i -> new OrderItemDto(
-                        new ProductDto(i.getProduct().getId(), i.getProduct().getProductName()
-                                , i.getProduct().getPrice()), i.getQuantity(), i.getPrice())).toList();
+        List<OrderItemDto> intems = order.getOrderItems().stream().map(i -> new OrderItemDto(new ProductDto(i.getProduct().getId(), i.getProduct().getProductName(), i.getProduct().getPrice()), i.getQuantity(), i.getPrice())).toList();
 
         return new OrderDto(order.getId(), order.getDate(), intems);
-
 
     }
 
     public List<OrderDto> findAllOrders() {
         return orderRepo.findAll().stream().map(this::mapToDto).toList();
     }
-
 
 }

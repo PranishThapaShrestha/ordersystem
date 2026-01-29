@@ -24,7 +24,6 @@ public class Order {
     @Column(name = "order_code")
     private String orderCode;
 
-
     @Column(name = "order_description")
     private String orderDescription;
 
@@ -42,7 +41,8 @@ public class Order {
         this.orderDescription = orderDescription;
 
     }
-    public void addItem(OrderItem item){
+
+    public void addItem(OrderItem item) {
         orderItems.add(item);
         item.setOrder(this);
     }

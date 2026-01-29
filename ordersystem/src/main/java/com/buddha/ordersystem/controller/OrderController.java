@@ -23,10 +23,7 @@ public class OrderController {
     @GetMapping("/create")
     public OrderDto createOrder(@RequestParam List<Long> productIds, @RequestParam List<Long> quantities) {
         return orderService.createOrder(productIds, quantities);
-
     }
-
-
 
     @GetMapping
     public List<OrderDto> getAllOrders() {

@@ -4,6 +4,7 @@ import com.buddha.ordersystem.dto.ProductDto;
 import com.buddha.ordersystem.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,6 +22,11 @@ public class ProductController {
     @GetMapping
     public List<ProductDto> getAllOrders() {
         return productService.findAllProducts();
+    }
+
+    @GetMapping("/ids")
+    public List<ProductDto> getOrdersByIds(@RequestParam List<Long> productIds) {
+        return productService.getAllProductsByIds(productIds);
     }
 
 }

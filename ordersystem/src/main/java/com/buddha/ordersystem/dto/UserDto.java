@@ -1,4 +1,4 @@
 package com.buddha.ordersystem.dto;
 
-public record UserDto() {
+public record UserDto(String userName, String address) {
 }

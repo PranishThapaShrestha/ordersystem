@@ -1,6 +1,8 @@
 package com.buddha.ordersystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "department")
+@Getter
+@Setter
 public class Department {
 
     @Id

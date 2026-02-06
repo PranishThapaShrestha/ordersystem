@@ -1,11 +1,13 @@
 package com.buddha.ordersystem.entity;
 
 import jakarta.persistence.*;
-
-import javax.annotation.processing.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,5 +16,7 @@ public class Roles {
     private String roleName;
 
 
-
+    public Roles(String roleName) {
+        this.roleName= roleName;
+    }
 }

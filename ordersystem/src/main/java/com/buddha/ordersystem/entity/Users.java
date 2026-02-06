@@ -1,6 +1,7 @@
 package com.buddha.ordersystem.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Users {
 
     @Id
@@ -15,7 +21,12 @@ public class Users {
     private Long id;
 
     @Column(name = "user_name")
+    @NonNull
     private String userName;
+
+    @Column(name = "passwords")
+    @NonNull
+    private String password;
 
     @Column(name = "address")
     private String address;

@@ -1,6 +1,9 @@
 package com.buddha.ordersystem.entity;
 
+import com.buddha.ordersystem.auth.entity.RefreshToken;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.HashSet;
@@ -24,6 +27,11 @@ public class Users {
     @NonNull
     private String userName;
 
+    @Column(name = "email")
+    @Email(message = "Go with correct email format")
+    @NotBlank
+    private String email;
+
     @Column(name = "passwords")
     @NonNull
     private String password;
@@ -35,10 +43,22 @@ public class Users {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    private boolean accountNonlocked = true;
+
+    private int failedAttempts;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
+
+
+    @OneToMany(cascade = CascadeType.ALL
+            , orphanRemoval = true
+            , mappedBy = "user"
+            , fetch = FetchType.LAZY)
+    private List<RefreshToken> refreshTokens;
+
 
 }

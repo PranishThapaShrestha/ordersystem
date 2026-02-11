@@ -53,7 +53,6 @@ public class UserService {
         return mapToUserDto(user);
     }
 
-
     private UserDto mapToUserDto(Users user) {
         Department dept = user.getDepartment();
         DepartmentDto departmentDto = new DepartmentDto(dept.getDepartmentName());

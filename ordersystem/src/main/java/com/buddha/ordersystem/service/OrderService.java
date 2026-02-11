@@ -9,9 +9,11 @@ import com.buddha.ordersystem.entity.Product;
 import com.buddha.ordersystem.repository.OrderItemRepository;
 import com.buddha.ordersystem.repository.OrderRepository;
 import com.buddha.ordersystem.repository.ProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderService {
 
     private final ProductRepository productRepo;

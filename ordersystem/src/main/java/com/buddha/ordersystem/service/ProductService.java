@@ -3,9 +3,11 @@ package com.buddha.ordersystem.service;
 import com.buddha.ordersystem.dto.ProductDto;
 import com.buddha.ordersystem.entity.Product;
 import com.buddha.ordersystem.repository.ProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductService {
     private final ProductRepository productRepo;
 

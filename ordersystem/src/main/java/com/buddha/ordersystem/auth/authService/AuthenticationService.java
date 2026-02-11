@@ -2,6 +2,7 @@ package com.buddha.ordersystem.auth.authService;
 
 import com.buddha.ordersystem.auth.authDTO.AuthResponse;
 import com.buddha.ordersystem.auth.authDTO.LoginRequest;
+import com.buddha.ordersystem.auth.entity.RefreshToken;
 import com.buddha.ordersystem.entity.Users;
 import com.buddha.ordersystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private final RefreshTokenService refreshTokenService;
 
     public AuthResponse login(LoginRequest loginRequest) {
 
@@ -45,12 +47,14 @@ public class AuthenticationService {
             userRepository.save(user);
             throw exception;
         }
+        Users user = userRepository.findBdByEmail(loginRequest.getEmail()).orElseThrow();
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         String accessTokenString = jwtService.generateAccessToken(userDetails);
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
 
-
-        return new AuthResponse(accessTokenString,);
+        return new AuthResponse(accessTokenString,refreshToken.getToken() );
     }
 }

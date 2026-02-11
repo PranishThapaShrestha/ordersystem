@@ -24,7 +24,12 @@ public class JwtService {
 
     public String generateAccessToken(UserDetails userDetails) {
 
-        return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)).signWith(Keys.hmacShaKeyFor(getSecretKey().getBytes(StandardCharsets.UTF_8))).compact();
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
+                .signWith(Keys.hmacShaKeyFor(getSecretKey().getBytes(StandardCharsets.UTF_8)))
+                .compact();
     }
 
     public String ExtractUsername(String token) {

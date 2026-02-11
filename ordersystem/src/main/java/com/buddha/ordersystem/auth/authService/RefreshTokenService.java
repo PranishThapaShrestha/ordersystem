@@ -2,7 +2,6 @@ package com.buddha.ordersystem.auth.authService;
 
 import com.buddha.ordersystem.auth.AuthRepository.RefreshTokenRepository;
 import com.buddha.ordersystem.auth.authDTO.AuthResponse;
-import com.buddha.ordersystem.auth.authDTO.TokenRefreshResponse;
 import com.buddha.ordersystem.auth.entity.RefreshToken;
 import com.buddha.ordersystem.entity.Users;
 import com.buddha.ordersystem.repository.UserRepository;
@@ -25,9 +24,7 @@ public class RefreshTokenService {
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
 
-    public RefreshToken createRefreshToken(String email) {
-
-        Users user = userRepository.findBdByEmail(email).orElseThrow();
+    public RefreshToken createRefreshToken(Users user) {
 
         RefreshToken token = new RefreshToken();
         token.setUser(user);
@@ -37,7 +34,6 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(token);
 
     }
-
 
     public RefreshToken verifyExpiration(RefreshToken token) {
 
@@ -49,24 +45,31 @@ public class RefreshTokenService {
         return token;
     }
 
-    public AuthResponse findByToken(String refreshToken) {
+    public AuthResponse refreshToken(String refreshToken) {
 
-        RefreshToken token = refreshTokenRepository.findByToken(refreshToken)
+        RefreshToken oldToken = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(() -> new RuntimeException("Refresh token not found"));
 
-        if(token.isRevoked()|| token.getExpiryDate().isBefore(Instant.now())){
-            throw new
+        if (oldToken.isRevoked() || oldToken.getExpiryDate().isBefore(Instant.now())) {
+            throw new RuntimeException(refreshToken);
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(token.getUser().getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(oldToken.getUser().getEmail());
 
-        String accessToken= jwtService.generateAccessToken(userDetails);
+        String newAccessToken = jwtService.generateAccessToken(userDetails);
 
 
+        RefreshToken refreshToken1 = refreshTokenService.createRefreshToken(oldToken.getUser());
 
-       return RefreshToken(accessToken,.)
+        return new AuthResponse(newAccessToken, refreshToken1.getToken());
 
     }
 
 
+    public RefreshToken findbyToken(String refreshToken) {
+
+        return refreshTokenRepository.findByToken(refreshToken)
+                        .orElseThrow(() -> new RuntimeException("Refresh Token not found!!!"));
+
+    }
 }
